@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LegalinSaja</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────── BASE ─────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
+
+    /* ─────────────── NAVBAR ─────────────── */
+    .navbar {
+      transition: all .35s ease;
+      padding: 20px 0;
+    }
+    .navbar.scrolled {
+      background: #fff !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      padding: 12px 0;
+    }
+    .navbar.scrolled .nav-link,
+    .navbar.scrolled .brand-name { color: #0f172a !important; }
+
+    .brand-name  { color: #fff; font-weight: 700; font-size: 17px; }
+    .brand-logo  {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-logo span { color: #fff; font-weight: 800; font-size: 16px; }
+
+    .nav-link {
+      color: rgba(255,255,255,.8) !important;
+      font-size: 14px; font-weight: 500;
+      margin-left: 8px;
+      transition: color .2s;
+    }
+    .nav-link:hover { color: #fff !important; }
+
+    .btn-nav {
+      background: rgba(255,255,255,.12);
+      color: #fff !important;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 13px; font-weight: 600;
+      margin-left: 10px;
+      transition: background .2s;
+    }
+    .btn-nav:hover { background: rgba(255,255,255,.22); color: #fff !important; }
+
+    /* ─────────────── HERO ─────────────── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(140deg, #0c1635 0%, #1a3480 52%, #2a61d4 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      padding: 110px 0 72px;
+    }
+
+    /* dot-grid pattern */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.055) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    /* decorative blobs */
+    .blob { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(70px); }
+    .blob-1 { width: 560px; height: 560px; background: rgba(96,165,250,.13); top: -120px; right: -80px; }
+    .blob-2 { width: 280px; height: 280px; background: rgba(147,197,253,.1);  bottom: -20px; left: -60px; }
+    .blob-3 { width: 220px; height: 220px; background: rgba(59,130,246,.14);  top: 45%; left: 32%; }
+
+    /* ── badge ── */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,.9);
+      margin-bottom: 22px;
+      backdrop-filter: blur(8px);
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(74,222,128,.25);
+    }
+
+    /* ── title ── */
+    .hero-title {
+      font-size: clamp(28px, 3.8vw, 46px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.5px;
+      margin-bottom: 18px;
+    }
+    .hero-title .hl {
+      background: linear-gradient(90deg, #93c5fd, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      color: rgba(255,255,255,.68);
+      font-size: 16px; line-height: 1.75;
+      max-width: 450px;
+      margin-bottom: 32px;
+    }
+
+    /* ── CTA ── */
+    .cta-wrap { display: flex; gap: 12px; flex-wrap: nowrap; margin-bottom: 44px; }
+    .cta-wrap a { flex: 1; text-align: center; }
+
+    .btn-primary-hero {
+      background: #fff; color: #1e3a8a;
+      padding: 13px 28px; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(0,0,0,.15);
+      transition: all .2s;
+    }
+    .btn-primary-hero:hover { background: #dbeafe; color: #1e3a8a; transform: translateY(-2px); }
+
+    .btn-outline-hero {
+      background: rgba(255,255,255,.09);
+      color: #fff;
+      padding: 13px 28px; border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,.28);
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all .2s;
+    }
+    .btn-outline-hero:hover { background: rgba(255,255,255,.18); color: #fff; transform: translateY(-2px); }
+
+    /* ── stats ── */
+    .hero-stats {
+      display: flex; align-items: center; gap: 28px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .stat-number { font-size: 26px; font-weight: 800; color: #fff; line-height: 1; }
+    .stat-label  { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.5); margin-top: 4px; }
+    .stat-divider { width: 1px; height: 38px; background: rgba(255,255,255,.15); }
+
+    /* ─────────────── FOTO KANAN ─────────────── */
+    .photo-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    /* glowing circle behind photo */
+    .photo-glow {
+      position: absolute;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(96,165,250,.38) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -58%);
+      filter: blur(28px);
+      pointer-events: none;
+    }
+
+    /* decorative rings */
+    .photo-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .photo-ring-1 {
+      width: 380px; height: 380px;
+      border: 50px solid rgba(255,255,255,.04);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .photo-ring-2 {
+      width: 480px; height: 480px;
+      border: 30px solid rgba(255,255,255,.025);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* the card itself */
+    .photo-card {
+      position: relative;
+      z-index: 3;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 26px;
+      padding: 10px 10px 0;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 64px rgba(0,0,0,.32);
+      max-width: 300px;
+      width: 100%;
+      overflow: hidden;
+      animation: float 4.5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-14px); }
+    }
+
+    .photo-card img {
+      width: 100%;
+      display: block;
+      border-radius: 18px 18px 0 0;
+      object-fit: cover;
+      object-position: top center;
+      max-height: 380px;
+    }
+
+    /* name tag bawah foto */
+    .photo-nametag {
+      padding: 14px 16px 18px;
+      text-align: center;
+    }
+    .photo-nametag .pname  { font-size: 15px; font-weight: 700; color: #fff; }
+    .photo-nametag .prole  { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.52); margin-top: 3px; }
+
+    /* floating chips */
+    .chip {
+      position: absolute;
+      z-index: 5;
+      border-radius: 100px;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; gap: 5px;
+      white-space: nowrap;
+    }
+    .chip-green {
+      background: #fff; color: #1e3a8a;
+      padding: 7px 14px;
+      top: 22px; right: -16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.2);
+    }
+    .chip-green .cdot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+
+    .chip-blue {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      color: #fff;
+      padding: 7px 14px;
+      bottom: 88px; left: -16px;
+      box-shadow: 0 4px 18px rgba(37,99,235,.45);
+    }
+
+    /* ─────────────── SECTIONS ─────────────── */
+    section { padding: 80px 0; }
+
+    /* about */
+    #about .about-inner {
+      background: #f8faff;
+      border-radius: 20px;
+      padding: 52px 48px;
+    }
+    #about .section-tag {
+      display: inline-block;
+      background: #dbeafe; color: #1d4ed8;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .5px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    #about h2 { font-size: 30px; font-weight: 800; color: #0f172a; }
+    #about p  { color: #64748b; font-size: 15px; line-height: 1.8; }
+
+    .about-feat {
+      display: flex; align-items: flex-start; gap: 14px;
+      margin-top: 20px;
+    }
+    .about-feat-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: #dbeafe; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #1d4ed8;
+    }
+    .about-feat-title { font-size: 14px; font-weight: 700; color: #0f172a; }
+    .about-feat-desc  { font-size: 13px; color: #64748b; margin-top: 2px; }
+
+    /* visi misi */
+    .vm-wrap {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 575.98px) { .vm-wrap { grid-template-columns: 1fr; } }
+
+    .vm-card {
+      background: #fff;
+      border: 1.5px solid #e8edf5;
+      border-radius: 18px;
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    /* garis aksen kiri */
+    .vm-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 24px; bottom: 24px;
+      width: 3px;
+      border-radius: 0 4px 4px 0;
+    }
+    .vm-card.visi::before { background: #2563eb; }
+    .vm-card.misi::before { background: #0ea5e9; }
+
+    .vm-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .vm-card.visi .vm-icon { background: #eff6ff; color: #2563eb; }
+    .vm-card.misi .vm-icon { background: #f0f9ff; color: #0ea5e9; }
+
+    .vm-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .vm-card.visi .vm-label { color: #2563eb; }
+    .vm-card.misi .vm-label { color: #0ea5e9; }
+
+    .vm-title {
+      font-size: 15px; font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 10px; line-height: 1.4;
+    }
+
+    .vm-text {
+      font-size: 13.5px; line-height: 1.75;
+      color: #64748b;
+    }
+
+    .vm-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 9px;
+    }
+    .vm-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: #64748b; line-height: 1.55;
+    }
+    .vm-list li .vm-dot {
+      width: 20px; height: 20px;
+      background: #eff6ff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .vm-list li .vm-dot i { font-size: 10px; color: #2563eb; }
+
+    /* services */
+    #services { background: #f1f5fb; }
+    .section-title { font-size: 32px; font-weight: 800; color: #0f172a; }
+    .section-sub   { font-size: 15px; color: #64748b; margin-top: 8px; }
+
+    .service-card {
+      background: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: all .3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,.05);
+      height: 100%;
+    }
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.1);
+    }
+    .icon-box {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 16px;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .service-card h5 { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+    .service-card p  { font-size: 14px; color: #64748b; line-height: 1.7; }
+
+    /* contact */
+    #contact .contact-box {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      border-radius: 24px;
+      padding: 56px 48px;
+      color: #fff;
+      text-align: center;
+    }
+    #contact h2  { font-size: 30px; font-weight: 800; }
+    #contact p   { color: rgba(255,255,255,.72); font-size: 15px; margin-top: 10px; }
+
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; color: #1e3a8a;
+      padding: 13px 28px; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      text-decoration: none; margin-top: 28px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.15);
+      transition: all .2s;
+    }
+    .contact-btn:hover { background: #dbeafe; transform: translateY(-2px); }
+
+    /* footer */
+    footer {
+      background: #0f172a;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      padding: 28px 0;
+      font-size: 14px;
+    }
+
+    /* ─────────────── RESPONSIVE ─────────────── */
+    @media (max-width: 991.98px) {
+      .photo-wrap { margin-top: 40px; }
+      .photo-ring-1, .photo-ring-2 { display: none; }
+      .chip-blue { display: none; }
+      .chip-green { right: 0; }
+    }
+    @media (max-width: 575.98px) {
+      #about .about-inner { padding: 32px 24px; }
+      #contact .contact-box { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+
+    <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="#">
+      <div class="brand-logo"><span>L</span></div>
+      <span class="brand-name">LegalinSaja</span>
+    </a>
+
+    <button class="navbar-toggler" style="border-color:rgba(255,255,255,.35);"
+            data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain">
+      <span class="navbar-toggler-icon" style="filter:invert(1);"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navMain">
+      <ul class="navbar-nav align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
+        <li class="nav-item"><a class="nav-link" href="#services">Layanan</a></li>
+        <li class="nav-item"><a class="btn-nav nav-link" href="#contact">Kontak</a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <!-- blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row align-items-end gy-4">
+
+      <!-- ── KIRI: teks ── -->
+      <div class="col-lg-6">
+
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Terpercaya &amp; Profesional
+        </div>
+
+        <h1 class="hero-title">
+          Izin Usaha <span class="hl">Satu Pintu</span><br>
+          untuk Bisnis Anda
+        </h1>
+
+        <p class="hero-desc">
+          Layanan <em>one-stop solution</em> mulai dari pendirian perusahaan,
+          izin operasional, izin gedung, izin lingkungan, hingga izin edar —
+          cepat, resmi, dan terpercaya.
+        </p>
+
+        <div class="cta-wrap">
+          <a href="#services" class="btn-primary-hero">Lihat Layanan</a>
+          <a href="#contact"  class="btn-outline-hero">Hubungi Kami</a>
+        </div>
+
+        <!-- stats -->
+        <div class="hero-stats">
+          <div>
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Klien Aktif</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div>
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Keberhasilan</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div>
+            <div class="stat-number">5 Thn</div>
+            <div class="stat-label">Pengalaman</div>
+          </div>
+        </div>
+
+      </div><!-- /col kiri -->
+
+      <!-- ── KANAN: foto ── -->
+      <div class="col-lg-6 d-flex justify-content-center justify-content-lg-end">
+        <div class="photo-wrap">
+
+          <!-- glow & rings -->
+          <div class="photo-glow"></div>
+          <div class="photo-ring photo-ring-1"></div>
+          <div class="photo-ring photo-ring-2"></div>
+
+          <!-- floating chip atas-kanan -->
+          <div class="chip chip-green">
+            <span class="cdot"></span>
+            Konsultasi Gratis
+          </div>
+
+          <!-- floating chip bawah-kiri -->
+          <div class="chip chip-blue">
+            <i class="bi bi-patch-check-fill" style="font-size:12px;"></i>
+            Legal Consultant
+          </div>
+
+          <!-- FOTO CARD -->
+          <div class="photo-card">
+            <!--
+              Letakkan file foto.png di folder yang SAMA dengan file HTML ini,
+              lalu nama file cukup "foto.png" — tidak perlu convert apapun.
+            -->
+            <img src="foto.png" alt="Rini Setyowati C.BMS – Founder LegalinSaja">
+
+            <div class="photo-nametag">
+              <div class="pname">Rini Setyowati C.BMS</div>
+              <div class="prole">Founder Legalinsaja.Id</div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /col kanan -->
+
+    </div><!-- /row -->
+  </div><!-- /container -->
+</section>
+
+<!-- ══════════════════ ABOUT ══════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+
+      <!-- baris 1: deskripsi + keunggulan -->
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-6">
+          <span class="section-tag">Tentang Kami</span>
+          <h2 class="mt-2">Solusi Legalitas Bisnis yang Cepat &amp; Terpercaya</h2>
+          <p class="mt-3">
+            LegalinSaja hadir sebagai mitra bisnis Anda dalam mengurus segala kebutuhan
+            legalitas usaha. Dengan pengalaman lebih dari 5 tahun, kami telah membantu
+            ratusan pelaku usaha mendapatkan izin yang diperlukan secara cepat dan resmi.
+          </p>
+        </div>
+        <div class="col-lg-6">
+          <div class="about-feat">
+            <div class="about-feat-icon"><i class="bi bi-shield-check"></i></div>
+            <div>
+              <div class="about-feat-title">Proses Resmi &amp; Terjamin</div>
+              <div class="about-feat-desc">Semua perizinan diproses melalui jalur resmi pemerintah.</div>
+            </div>
+          </div>
+          <div class="about-feat">
+            <div class="about-feat-icon"><i class="bi bi-lightning-charge"></i></div>
+            <div>
+              <div class="about-feat-title">Cepat &amp; Efisien</div>
+              <div class="about-feat-desc">Estimasi waktu yang jelas dan proses yang transparan.</div>
+            </div>
+          </div>
+          <div class="about-feat">
+            <div class="about-feat-icon"><i class="bi bi-headset"></i></div>
+            <div>
+              <div class="about-feat-title">Konsultasi Gratis</div>
+              <div class="about-feat-desc">Tim kami siap membantu Anda 7 hari seminggu.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- baris 2: visi & misi -->
+      <div class="vm-wrap">
+
+        <!-- VISI -->
+        <div class="vm-card visi">
+          <div class="vm-icon"><i class="bi bi-eye"></i></div>
+          <div class="vm-label">Visi</div>
+          <div class="vm-title">Menjadi Mitra Legalitas Bisnis Terpercaya di Indonesia</div>
+          <p class="vm-text">
+            Mewujudkan ekosistem bisnis yang sehat dengan memastikan setiap pelaku usaha
+            memiliki legalitas yang kuat, sah, dan sesuai regulasi — sehingga bisnis dapat
+            tumbuh dengan aman dan berkelanjutan.
+          </p>
+        </div>
+
+        <!-- MISI -->
+        <div class="vm-card misi">
+          <div class="vm-icon"><i class="bi bi-bullseye"></i></div>
+          <div class="vm-label">Misi</div>
+          <div class="vm-title">Langkah Nyata Kami untuk Anda</div>
+          <ul class="vm-list">
+            <li><span class="vm-dot"><i class="bi bi-check"></i></span>Memberikan layanan pengurusan izin yang cepat, transparan, dan terjangkau.</li>
+            <li><span class="vm-dot"><i class="bi bi-check"></i></span>Mendampingi pelaku usaha dari awal hingga izin terbit secara resmi.</li>
+            <li><span class="vm-dot"><i class="bi bi-check"></i></span>Menyediakan konsultasi gratis agar setiap keputusan bisnis tepat sasaran.</li>
+            <li><span class="vm-dot"><i class="bi bi-check"></i></span>Terus berinovasi mengikuti perkembangan regulasi dan kebutuhan pasar.</li>
+          </ul>
+        </div>
+
+      </div><!-- /vm-wrap -->
+
+    </div><!-- /about-inner -->
+  </div>
+</section>
+
+<!-- ══════════════════ SERVICES ══════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-tag" style="background:#dbeafe;color:#1d4ed8;">Layanan Kami</span>
+      <h2 class="section-title mt-2">Apa yang Kami Tawarkan</h2>
+      <p class="section-sub">Semua kebutuhan legalitas bisnis Anda dalam satu tempat.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="service-card">
+          <div class="icon-box"><i class="bi bi-building"></i></div>
+          <h5>Pendirian Usaha</h5>
+          <p>Pendirian PT, CV, dan berbagai badan usaha lainnya secara resmi dan cepat.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card">
+          <div class="icon-box"><i class="bi bi-file-earmark-check"></i></div>
+          <h5>Izin Operasional</h5>
+          <p>Perizinan usaha lengkap dan resmi sesuai regulasi yang berlaku.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card">
+          <div class="icon-box"><i class="bi bi-house-check"></i></div>
+          <h5>Izin Gedung &amp; Lingkungan</h5>
+          <p>Pengurusan IMB, UKL-UPL, AMDAL, dan izin lingkungan lainnya.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card">
+          <div class="icon-box"><i class="bi bi-capsule"></i></div>
+          <h5>Izin Edar</h5>
+          <p>Pendampingan izin edar produk pangan, kosmetik, dan kesehatan.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card">
+          <div class="icon-box"><i class="bi bi-shield-check"></i></div>
+          <h5>Legalitas Bisnis</h5>
+          <p>Perlindungan hukum dan legalitas bisnis agar usaha Anda aman dan terpercaya.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card">
+          <div class="icon-box"><i class="bi bi-headset"></i></div>
+          <h5>Konsultasi Gratis</h5>
+          <p>Diskusikan kebutuhan legalitas bisnis Anda dengan konsultan berpengalaman kami.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <h2>Siap Urus Legalitas Bisnis Anda?</h2>
+      <p>Hubungi kami sekarang dan dapatkan konsultasi gratis bersama tim ahli kami.</p>
+
+      <a href="/cdn-cgi/l/email-protection#a7cbc2c0c6cbcec9d4c6cdc6e7c0cac6cecb89c4c8ca" class="contact-btn">
+        <i class="bi bi-envelope-fill"></i>
+        <span class="__cf_email__" data-cfemail="670b0200060b0e0914060d0627000a060e0b4904080a">[email&#160;protected]</span>
+      </a>
+
+      <div class="mt-3">
+        <a href="https://wa.me/6281234567890" class="contact-btn"
+           style="background:rgba(255,255,255,.15);color:#fff;margin-top:0;">
+          <i class="bi bi-whatsapp"></i>
+          Chat via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <p>© 2026 LegalinSaja. All rights reserved.</p>
+</footer>
+
+<!-- ══════════════════ SCRIPTS ══════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsde
