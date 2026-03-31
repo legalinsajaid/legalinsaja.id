@@ -1,7 +1,7 @@
 backend:
-  name: github
+  name: git-gateway
   repo: legalinsajaid/legalinsaja.id  # ganti sesuai repo kamu
-  branch: master
+  branch: main
 
 media_folder: "images"       # tempat upload gambar
 public_folder: "/images"
