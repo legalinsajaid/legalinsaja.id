@@ -1,0 +1,18 @@
+backend:
+  name: github
+  repo: legalinsajaid/legalinsaja.id  # ganti sesuai repo kamu
+  branch: main
+
+media_folder: "images"       # tempat upload gambar
+public_folder: "/images"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Judul", name: "title", widget: "string" }
+      - { label: "Tanggal", name: "date", widget: "datetime" }
+      - { label: "Konten", name: "body", widget: "markdown" }
